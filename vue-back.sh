@@ -8,3 +8,5 @@ echo '拉取最近代码'
 git pull
 echo '开始执行构建'
 # 1:01:19
+docker build -t vue-back .
+
