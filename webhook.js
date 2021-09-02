@@ -11,7 +11,6 @@ function sign(body) {
 let server = http.createServer(function (req, res) {
     console.log('-----------------分割线-----------------');
     if (req.method === 'POST' && req.url === '/webhook') {
-        console.log('req---:', req);
         console.log('req.method:', req.method, 'req.url:', req.url);
 
         let buffers = [];
