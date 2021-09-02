@@ -1,5 +1,8 @@
 #! /bin/bash
-WORK_PATH="/user/projects/vue-back"
+WORK_PATH="/root/user/projects/vue-back"
+# /root/user/projects/vue-webhook
+# /root/user/projects/vue-back
+
 cd $WORK_PATH
 echo "先清除老代码"
 git reset --head origin/main
