@@ -1,8 +1,5 @@
 #! /bin/bash
 WORK_PATH="/root/user/projects/vue-back"
-# /root/user/projects/vue-webhook
-# /root/user/projects/vue-back
-# /root/user/projects/vue-front
 
 cd $WORK_PATH
 echo "先清除老代码"
@@ -11,6 +8,10 @@ git clean -f
 echo '拉取最近代码'
 git pull
 echo '开始执行构建'
-# 1:01:19
 docker build -t vue-back .
-
+echo '停止旧容器并删除旧容器'
+docker stop vue-back-container
+docker rm vue-back-container
+echo "启动新容器"
+docker container run -p 3000:3000
+# 01:07:55
