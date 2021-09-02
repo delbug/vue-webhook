@@ -2,6 +2,7 @@
 WORK_PATH="/root/user/projects/vue-back"
 # /root/user/projects/vue-webhook
 # /root/user/projects/vue-back
+# /root/user/projects/vue-front
 
 cd $WORK_PATH
 echo "先清除老代码"
