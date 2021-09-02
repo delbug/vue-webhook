@@ -1,5 +1,7 @@
 let http = require('http');
 let crypto = require('crypto');
+let SECRET = '123456';
+
 function sign(body) {
     return `sha1=` + crypto.creatHmac('sha1', SECRET).update(body).digest('hex');
 }
@@ -8,7 +10,9 @@ function sign(body) {
 let server = http.createServer(function (req, res) {
     console.log('-----------------分割线-----------------');
     if (req.method === 'POST' && req.url === '/webhook') {
+        console.log('req---:', req);
         console.log('req.method:', req.method, 'req.url:', req.url);
+
         let buffers = [];
         req.on('data', function (buffer) {
             buffers.push(buffer);
