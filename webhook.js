@@ -1,9 +1,10 @@
 let http = require('http');
-let crypto = require('crypto');
+let { createHmac } = require('crypto');
 let SECRET = '123456';
+console.log('createHmac----:', createHmac);
 
 function sign(body) {
-    return `sha1=` + crypto.createHmac('sha1', SECRET).update(body).digest('hex');
+    return `sha1=` + createHmac('sha1', SECRET).update(body).digest('hex');
 }
 
 
