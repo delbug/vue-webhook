@@ -34,7 +34,9 @@ let server = http.createServer(function (req, res) {
                 console.log('Not Allowed 签名不一样');
                 return res.end('Not Allowed 签名不一样');
             };
+
             res.setHeader('Content-Type', 'application/json')
+
             res.end(JSON.stringify({ ok: true }))
             if (event == 'push') {
                 console.log('已经push了=====');
