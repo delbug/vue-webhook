@@ -35,9 +35,12 @@ let server = http.createServer(function (req, res) {
                 return res.end('Not Allowed 签名不一样');
             };
 
-            res.setHeader('Content-Type', 'application/json')
+            // res.setHeader('Content-Type', 'application/json')
+            res.setHeader("Content-Type", "application/json;charset=utf-8");
 
-            res.end(JSON.stringify({ ok: true }))
+            let str = JSON.stringify({ ok: true });
+            res.end(str)
+
             if (event == 'push') {
                 console.log('已经push了=====');
                 // 开始部署
