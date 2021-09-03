@@ -39,8 +39,6 @@ let server = http.createServer(function (req, res) {
                 return res.end('Not Allowed 签名不一样');
             };
 
-
-
             let str = JSON.stringify({ ok: true });
             console.log(3333);
             res.end(str)
