@@ -15,4 +15,4 @@ docker rm vue-back-container
 echo "启动新容器"
 docker container run -p 3000:3000 --name vue-back-container -d vue-back
 
-
+# 执行 sh vue-back.sh 
