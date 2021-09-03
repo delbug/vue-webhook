@@ -1,7 +1,6 @@
 let http = require('http');
 let { createHmac } = require('crypto');
 let SECRET = '123456';
-console.log('createHmac----:', createHmac);
 let { spawn } = require('child_process');
 let sendMail = require('./sendmail.js');
 
@@ -13,7 +12,7 @@ function sign(body) {
 let server = http.createServer(function (req, res) {
     console.log('-----------------分割线------------------------------');
     if (req.method === 'POST' && req.url === '/webhook') {
-        console.log('req.method:', req.method, 'req.url:', req.url);
+        console.log('req.method:', req.method, '；req.url:', req.url);
 
         let buffers = [];
         req.on('data', function (buffer) {
@@ -31,9 +30,7 @@ let server = http.createServer(function (req, res) {
             console.log('signature=====:', signature);
             console.log('signbody======:', signbody);
 
-            console.log(1111);
             // res.setHeader("Content-Type", "application/json;charset=utf-8");
-            console.log(2222);
 
             if (signature !== signbody) {
                 console.log('Not Allowed 签名不一样');
@@ -41,14 +38,12 @@ let server = http.createServer(function (req, res) {
             };
 
             let str = JSON.stringify({ ok: true });
-            console.log(3333);
             res.end(str)
 
             if (event == 'push') {
-                console.log('已经push了=====');
+                console.log('已经push=====');
                 // 开始部署
                 let payload = JSON.parse(body)
-                // console.log('payload=====:', payload.repository);
                 let child = spawn('sh', [`./${payload.repository.name}.sh`]);
                 let buffers = [];
 
@@ -57,10 +52,8 @@ let server = http.createServer(function (req, res) {
                 })
 
                 child.stdout.on('end', function (buffer) {
-                    console.log('end======');
 
                     let log = buffers.concat(buffer).toString()
-                    console.log('log===', log);
 
                     sendMail(`
                     <h1>部署日期：${new Date()}</h1>

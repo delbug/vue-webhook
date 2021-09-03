@@ -10,7 +10,7 @@ let transporter = nodemailer.createTransport({
 })
 
 function sendMail(message) {
-    console.log('执行了sendMail');
+    console.log('部署成功，自动发送邮件');
     let mailOptions = {
         from: '"81692059" <81692059@qq.com>', // 发送地址
         to: '81692059@qq.com', // 接受者
@@ -22,7 +22,7 @@ function sendMail(message) {
         if (err) {
             return console.log(err);
         }
-        console.log('Message sent 结果 ===:', info.messageId);
+        console.log('Message send 结果:', info.messageId);
     })
 
 };
