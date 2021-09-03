@@ -30,14 +30,16 @@ let server = http.createServer(function (req, res) {
             console.log('signature=====:', signature);
             console.log('signbody======:', signbody);
 
+            console.log(1111);
+            res.setHeader("Content-Type", "application/json;charset=utf-8");
+            console.log(2222);
+
             if (signature !== signbody) {
                 console.log('Not Allowed 签名不一样');
                 return res.end('Not Allowed 签名不一样');
             };
-            console.log(1111);
-            // res.setHeader('Content-Type', 'application/json')
-            res.setHeader("Content-Type", "application/json;charset=utf-8");
-            console.log(2222);
+
+
 
             let str = JSON.stringify({ ok: true });
             console.log(3333);
