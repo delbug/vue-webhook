@@ -48,7 +48,7 @@ let server = http.createServer(function (req, res) {
                 console.log('已经push了=====');
                 // 开始部署
                 let payload = JSON.parse(body)
-                console.log('payload=====:', payload.repository);
+                // console.log('payload=====:', payload.repository);
                 let child = spawn('sh', [`./${payload.repository.name}.sh`]);
                 let buffers = [];
 
