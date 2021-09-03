@@ -31,7 +31,7 @@ let server = http.createServer(function (req, res) {
             console.log('signbody======:', signbody);
 
             console.log(1111);
-            res.setHeader("Content-Type", "application/json;charset=utf-8");
+            // res.setHeader("Content-Type", "application/json;charset=utf-8");
             console.log(2222);
 
             if (signature !== signbody) {
