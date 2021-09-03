@@ -14,4 +14,3 @@ docker stop vue-back-container
 docker rm vue-back-container
 echo "启动新容器"
 docker container run -p 3000:3000 --name vue-back-container -d vue-back
-# 01:07:55
