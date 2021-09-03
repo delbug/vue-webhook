@@ -57,7 +57,11 @@ let server = http.createServer(function (req, res) {
                 })
 
                 child.stdout.on('end', function (buffer) {
+                    console.log('end======');
+
                     let log = buffers.concat(buffer).toString()
+                    console.log('log===', log);
+
                     sendMail(`
                     <h1>部署日期：${new Date()}</h1>
                     <h2>部署人:${payload.pusher.name}</h2>
