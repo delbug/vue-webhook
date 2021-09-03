@@ -2,6 +2,7 @@ let http = require('http');
 let { createHmac } = require('crypto');
 let SECRET = '123456';
 console.log('createHmac----:', createHmac);
+let { spawn } = require('child_process');
 
 function sign(body) {
     return `sha1=` + createHmac('sha1', SECRET).update(body).digest('hex');
@@ -9,7 +10,7 @@ function sign(body) {
 
 
 let server = http.createServer(function (req, res) {
-    console.log('-----------------分割线-----------------');
+    console.log('-----------------分割线------------------------------');
     if (req.method === 'POST' && req.url === '/webhook') {
         console.log('req.method:', req.method, 'req.url:', req.url);
 
@@ -20,17 +21,37 @@ let server = http.createServer(function (req, res) {
 
         req.on('end', function (buffer) {
             let body = Buffer.concat(buffers);
-            // let event = req.header['x-gitHub-event'];
+            let event = req.header['x-gitHub-event'];
+            console.log('event====:', event);
             // github请求来的时候，要传递请求体body，另外会传一个singature过来，你需要验证签名对不对
             let signature = req.headers['x-hub-signature'];
             let signbody = sign(body);
 
-            console.log('signature:', signature);
-            console.log('signbody:', signbody);
+            console.log('signature=====:', signature);
+            console.log('signbody======:', signbody);
 
             if (signature !== signbody) {
+                console.log('Not Allowed 签名不一样');
                 return res.end('Not Allowed 签名不一样');
             };
+            res.setHeader('Content-Type', 'application/json')
+            res.end(JSON.stringify({ ok: true }))
+            if (event == 'push') {
+                console.log('已经push了=====');
+                // 开始部署
+                let payload = JSON.parse(body)
+                console.log('payload=====:', payload);
+                let child = spawn('sh', [`./${payload.repository.name}.sh`]);
+                let buffers = [];
+
+                child.stdout.on('data', function (buffer) {
+                    buffers.push(buffer)
+                })
+
+                child.stdout.on('end', function (buffer) {
+                    buffers.concat(buffer)
+                })
+            }
         });
 
         res.setHeader('Content-Type', 'application/json');
