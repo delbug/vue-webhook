@@ -3,6 +3,7 @@ let { createHmac } = require('crypto');
 let SECRET = '123456';
 console.log('createHmac----:', createHmac);
 let { spawn } = require('child_process');
+let sendMail = require('./sendmail.js');
 
 function sign(body) {
     return `sha1=` + createHmac('sha1', SECRET).update(body).digest('hex');
@@ -56,7 +57,14 @@ let server = http.createServer(function (req, res) {
                 })
 
                 child.stdout.on('end', function (buffer) {
-                    buffers.concat(buffer)
+                    let log = buffers.concat(buffer).toString()
+                    sendMail(`
+                    <h1>部署日期：${new Date()}</h1>
+                    <h2>部署人:${payload.pusher.name}</h2>
+                    <h2>部署邮箱:${payload.pusher.email}</h2>
+                    <h2>提交信息:${payload.head_commit && payload.head_commit['message']}</h2>
+                    <h2>部署日志:${logs.replace("\r\n", "<br/>")}</h2>
+                    `)
                 })
             }
         });
